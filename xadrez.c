@@ -1,274 +1,83 @@
 #include <stdio.h>
 #include <string.h>
 
-int moverCasas;
+// Número fixo de casas a serem movidas pelas peças (entrada definida no código)
+int moverCasas = 3;
 
-// lógica do movimento da torre
-void moverTorre(){
-    int direcao;
-    int casasError = 1;
-    int direcaoError = 1;
+// Função recursiva para mover a torre
+void moverTorreRecursiva(int casasRestantes, const char* direcao) {
+    if (casasRestantes == 0) return;
+    printf("%s\n", direcao);
+    moverTorreRecursiva(casasRestantes - 1, direcao);
+}
 
-    while(casasError == 1){
-        printf("Deseja mover quantas casas (1 - 5): ");
-        scanf("%d", &moverCasas);
-        if(moverCasas > 5){
-            printf("Numero muito alto, tente novamente...\n\n");
-        }else if(moverCasas < 1){
-            printf("E necessario pelo menos mover uma casa, tente novamente...\n\n");
-        }else{
-            casasError = 0;
+// Função recursiva e com loops aninhados para mover o bispo
+void moverBispoRecursivo(int casasRestantes, const char* direcaoVertical, const char* direcaoHorizontal) {
+    if (casasRestantes == 0) return;
+
+    for (int v = 0; v < 1; v++) { // movimento vertical
+        printf("%s\n", direcaoVertical);
+        for (int h = 0; h < 1; h++) { // movimento horizontal
+            printf("%s\n", direcaoHorizontal);
         }
     }
+    moverBispoRecursivo(casasRestantes - 1, direcaoVertical, direcaoHorizontal);
+}
 
-    while(direcaoError == 1){
-        printf("\nDeseja mover em qual direcao?\n1 - Esquerda\n2 - Cima\n3 - Direita\n4 - Baixo\n\nDigite sua resposta: ");
-        scanf("%d", &direcao);
+// Função recursiva para mover a rainha
+void moverRainhaRecursiva(int casasRestantes, const char* direcao) {
+    if (casasRestantes == 0) return;
+    printf("%s\n", direcao);
+    moverRainhaRecursiva(casasRestantes - 1, direcao);
+}
 
-        if(direcaoError > 4 || direcaoError < 1){
-            printf("Direcao invalida, tente novamente...\n\n");
+// Movimento do cavalo usando loops complexos com controle de fluxo
+void moverCavaloAvancado() {
+    int movimentos = 3; // número de movimentos em "L"
+    for (int m = 0; m < movimentos; m++) {
+        for (int i = 0, j = 0; i < 3 && j < 2; i++, j++) {
+            if (i < 2) {
+                printf("Cima\n");
+                continue; // continua subindo
+            }
+            if (j == 1) {
+                printf("Direita\n");
+                break; // após subir duas vezes, move para direita
+            }
         }
-        direcaoError = 0;
+        printf("---\n");
     }
-
-    switch (direcao)
-    {
-        case 1:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para esquerda!\n");
-            }
-            break;
-        case 2:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para cima!\n");
-            }
-            break;
-        case 3:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para direita!\n");
-            }
-            break;
-        case 4:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para baixo!\n");
-            }
-            break;
-    }
-    
     printf("Acao finalizada...\n\n");
-    moverCasas = 0;
 }
 
-// lógica do movimento do bispo
-void moverBispo(){
-    int direcao;
-    int casasError = 1;
-    int direcaoError = 1;
-
-    while(casasError == 1){
-        printf("Deseja mover quantas casas (1 - 5): ");
-        scanf("%d", &moverCasas);
-        if(moverCasas > 5){
-            printf("Numero muito alto, tente novamente...\n\n");
-        }else if(moverCasas < 1){
-            printf("E necessario pelo menos mover uma casa, tente novamente...\n\n");
-        }else{
-            casasError = 0;
-        }
-    }
-
-    while(direcaoError == 1){
-        printf("\nDeseja mover em qual direcao?\n1 - Diagonal Superior Esquerda\n2 - Diagonal Superior Direita\n3 - Diagonal Inferior Direita\n4 - Diagonal Inferior Esquerda\n\nDigite sua resposta: ");
-        scanf("%d", &direcao);
-
-        if(direcaoError > 4 || direcaoError < 1){
-            printf("Direcao invalida, tente novamente...\n\n");
-        }
-        direcaoError = 0;
-    }
-
-    switch (direcao)
-    {
-        case 1:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para Diagonal Superior Esquerda!\n");
-            }
-            break;
-        case 2:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para Diagonal Superior Direita!\n");
-            }
-            break;
-        case 3:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para Diagonal Inferior Direita!\n");
-            }
-            break;
-        case 4:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para Diagonal Inferior Esquerda!\n");
-            }
-            break;
-    }
-    
-    printf("Acao finalizada...\n");
-    moverCasas = 0;
-}
-
-void moverCavalo(){
-    int direcao;
-    int direcaoError = 1;
-
-    while(direcaoError == 1){
-        printf("\nDeseja mover em qual direcao?\n1 - Esquerda Superior\n2 - Direita Superior\n3 - Direita Inferior\n4 - Esquerda inferior\n\nDigite sua resposta: ");
-        scanf("%d", &direcao);
-
-        if(direcaoError > 4 || direcaoError < 1){
-            printf("Direcao invalida, tente novamente...\n\n");
-        }
-        direcaoError = 0;
-    }
-
-    printf("-------------------\n");
-    switch (direcao)
-    {
-        case 1:
-            for(int i = 0; i < 1; i++){
-                for(int j = 0; j < 2 ; j++){
-                    printf("Moveu para Cima!\n");
-                }
-                printf("Moveu para Esquerda\n");
-            }
-            break;
-        case 2:
-            for(int i = 0; i < 1; i++){
-                for(int j = 0; j < 2 ; j++){
-                    printf("Moveu para Cima!\n");
-                }
-                printf("Moveu para Direita\n");
-            }
-            break;
-        case 3:
-            for(int i = 0; i < 1; i++){
-                for(int j = 0; j < 2 ; j++){
-                    printf("Moveu para Baixo!\n");
-                }
-                printf("Moveu para Direita\n");
-            }
-            break;
-        case 4:
-            for(int i = 0; i < 1; i++){
-                for(int j = 0; j < 2 ; j++){
-                    printf("Moveu para Baixo!\n");
-                }
-                printf("Moveu para Esquerda\n");
-            }
-            break;
-    }
-    printf("-------------------\n\n");
-    printf("Acao finalizada...\n");
-    moverCasas = 0;
-}
-
-// lógica do movimento da rainha
-void moverRainha(){
-    int direcao;
-    int casasError = 1;
-    int direcaoError = 1;
-
-    while(casasError == 1){
-        printf("Deseja mover quantas casas (1 - 8): ");
-        scanf("%d", &moverCasas);
-        if(moverCasas > 8){
-            printf("Numero muito alto, tente novamente...\n\n");
-        }else if(moverCasas < 1){
-            printf("E necessario pelo menos mover uma casa, tente novamente...\n\n");
-        }else{
-            casasError = 0;
-        }
-    }
-
-    while(direcaoError == 1){
-        printf("\nDeseja mover em qual direcao?\n1 - Esquerda\n2 - Diagonal Superior Esquerda\n3 - Cima\n4 - Diagonal Superior Direita\n5 - Direita\n6 - Diagonal Inferior Direita\n7 - Baixo\n8 - Diagonal Inferior Esquerda\n\nDigite sua resposta: ");
-        scanf("%d", &direcao);
-
-        if(direcao > 8 || direcao < 1){
-            printf("Direcao invalida, tente novamente...\n");
-        }
-        direcaoError = 0;
-    }
-
-    switch (direcao)
-    {
-        case 1:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para Esquerda!\n");
-            }
-            break;
-        case 2:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para Diagonal Superior Esquerda!\n");
-            }
-            break;
-        case 3:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para Cima!\n");
-            }
-            break;
-        case 4:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para Diagonal Superior Direita!\n");
-            }
-            break;
-        case 5:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para Direita!\n");
-            }
-            break;
-        case 6:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para Diagonal Inferior Direita!\n");
-            }
-            break;
-        case 7:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para Baixo!\n");
-            }
-            break;
-        case 8:
-            for(int i = 0; i < moverCasas; i++){
-                printf("Moveu para Diagonal Inferior Esquerda!\n");
-            }
-            break;
-    }
-    
-    printf("Acao finalizada...\n");
-    moverCasas = 0;
-}
-
-// menu de movimento
-void menuDisplay(){
-    int terminou;
+// Menu principal
+void menuDisplay() {
+    int terminou = 0;
     int escolha;
 
     printf("========== Jogo de Xadrez ==========\n");
-    while(terminou == 0){
+    while (!terminou) {
         printf("Mover:\n1 - Torre\n2 - Bispo\n3 - Rainha\n4 - Cavalo\n5 - Sair\n\n");
         printf("Digite o numero: ");
         scanf("%d", &escolha);
+        printf("\n");
 
-        switch(escolha){
+        switch (escolha) {
             case 1:
-                moverTorre();
+                printf("Torre movendo para Direita:\n");
+                moverTorreRecursiva(moverCasas, "Direita");
                 break;
             case 2:
-                moverBispo();
+                printf("Bispo movendo para Diagonal Superior Esquerda:\n");
+                moverBispoRecursivo(moverCasas, "Cima", "Esquerda");
                 break;
             case 3:
-                moverRainha();
+                printf("Rainha movendo para Baixo:\n");
+                moverRainhaRecursiva(moverCasas, "Baixo");
                 break;
             case 4:
-                moverCavalo();
+                printf("Cavalo movendo em L para Direita Superior:\n");
+                moverCavaloAvancado();
                 break;
             case 5:
                 printf("Jogo Encerrado...\n");
@@ -280,11 +89,9 @@ void menuDisplay(){
         }
         printf("\n==================\n\n");
     }
-    
-
 }
 
-int main(){
+int main() {
     menuDisplay();
     return 0;
 }
