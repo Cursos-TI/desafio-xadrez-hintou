@@ -111,10 +111,64 @@ void moverBispo(){
             break;
     }
     
-    printf("Acao finalizada...\n\n");
+    printf("Acao finalizada...\n");
     moverCasas = 0;
 }
 
+void moverCavalo(){
+    int direcao;
+    int direcaoError = 1;
+
+    while(direcaoError == 1){
+        printf("\nDeseja mover em qual direcao?\n1 - Esquerda Superior\n2 - Direita Superior\n3 - Direita Inferior\n4 - Esquerda inferior\n\nDigite sua resposta: ");
+        scanf("%d", &direcao);
+
+        if(direcaoError > 4 || direcaoError < 1){
+            printf("Direcao invalida, tente novamente...\n\n");
+        }
+        direcaoError = 0;
+    }
+
+    printf("-------------------\n");
+    switch (direcao)
+    {
+        case 1:
+            for(int i = 0; i < 1; i++){
+                for(int j = 0; j < 2 ; j++){
+                    printf("Moveu para Cima!\n");
+                }
+                printf("Moveu para Esquerda\n");
+            }
+            break;
+        case 2:
+            for(int i = 0; i < 1; i++){
+                for(int j = 0; j < 2 ; j++){
+                    printf("Moveu para Cima!\n");
+                }
+                printf("Moveu para Direita\n");
+            }
+            break;
+        case 3:
+            for(int i = 0; i < 1; i++){
+                for(int j = 0; j < 2 ; j++){
+                    printf("Moveu para Baixo!\n");
+                }
+                printf("Moveu para Direita\n");
+            }
+            break;
+        case 4:
+            for(int i = 0; i < 1; i++){
+                for(int j = 0; j < 2 ; j++){
+                    printf("Moveu para Baixo!\n");
+                }
+                printf("Moveu para Esquerda\n");
+            }
+            break;
+    }
+    printf("-------------------\n\n");
+    printf("Acao finalizada...\n");
+    moverCasas = 0;
+}
 
 // lógica do movimento da rainha
 void moverRainha(){
@@ -139,7 +193,7 @@ void moverRainha(){
         scanf("%d", &direcao);
 
         if(direcao > 8 || direcao < 1){
-            printf("Direcao invalida, tente novamente...\n\n");
+            printf("Direcao invalida, tente novamente...\n");
         }
         direcaoError = 0;
     }
@@ -188,7 +242,7 @@ void moverRainha(){
             break;
     }
     
-    printf("Acao finalizada...\n\n");
+    printf("Acao finalizada...\n");
     moverCasas = 0;
 }
 
@@ -199,7 +253,7 @@ void menuDisplay(){
 
     printf("========== Jogo de Xadrez ==========\n");
     while(terminou == 0){
-        printf("Mover:\n1 - Torre\n2 - Bispo\n3 - Rainha\n4 - Sair\n\n");
+        printf("Mover:\n1 - Torre\n2 - Bispo\n3 - Rainha\n4 - Cavalo\n5 - Sair\n\n");
         printf("Digite o numero: ");
         scanf("%d", &escolha);
 
@@ -214,14 +268,19 @@ void menuDisplay(){
                 moverRainha();
                 break;
             case 4:
+                moverCavalo();
+                break;
+            case 5:
                 printf("Jogo Encerrado...\n");
                 terminou = 1;
                 break;
             default:
-                printf("Numero invalido, tente novamente...\n\n");
+                printf("Numero invalido, tente novamente...\n");
                 break;
         }
+        printf("\n==================\n\n");
     }
+    
 
 }
 
